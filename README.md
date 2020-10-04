@@ -8,6 +8,8 @@ Music made with Sonic-Pi.
 
 Additionnal vinyl riffs from www.soundtrackloops.com.
 
+Audio effects made with LabChirp.
+
 "Beat" player model made with Tilt Brush on Quest.
 
 Heart icons made with Aseprite.

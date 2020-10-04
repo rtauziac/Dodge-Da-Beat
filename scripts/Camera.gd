@@ -42,7 +42,7 @@ func _process(delta):
 	
 	#apply force in the direction of the vinyl
 	$rotation_watcher.look_at(Vector3.ZERO, Vector3.UP)
-	translate((-$rotation_watcher.global_transform.basis.z - $rotation_watcher.global_transform.basis.x) * cam_speed * delta / 2)
+	translate((-$rotation_watcher.global_transform.basis.z + $rotation_watcher.global_transform.basis.x) * cam_speed * delta / 2)
 	
 	# look at the player
 	lerp_player_pos = lerp(lerp_player_pos, player.global_transform.origin, player_weight)

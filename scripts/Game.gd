@@ -32,6 +32,7 @@ func on_tween_respawn_finished():
 	respawn()
 
 func remove_heart():
+	if $CanvasLayer/HBoxContainer/HeartBoxContainer.get_child_count() > 0:
 		$CanvasLayer/HBoxContainer/HeartBoxContainer.get_child(0).queue_free()
 
 func show_end_game_screen():
