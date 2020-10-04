@@ -1,0 +1,102 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://imports/vinyl.glb" type="PackedScene" id=1]
+[ext_resource path="res://scripts/vinyl_work.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Vinyl/Obstacles/Block.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Vinyl/Obstacles/Half Block.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Vinyl/Obstacles/Tall Block.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Vinyl/Obstacles/Hell.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/Vinyl/Obstacles/Door.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0.00787402, 0.281818 ), 0.0, 0.111133, 0, 0, Vector2( 0.212598, 0.372727 ), 1.7703, 1.7703, 0, 0, Vector2( 0.295276, 0.581818 ), 0.0, 0.0, 0, 0, Vector2( 0.440945, 0.345455 ), 0.139945, 0.139945, 0, 0, Vector2( 0.57874, 0.563636 ), 2.96883, 2.96883, 0, 0, Vector2( 0.759843, 0.436364 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 4.38727, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, -0.065045, 0, 0, Vector2( 0.57874, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.11811, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.362205, 0.636364 ), 0.0, 0.0, 0, 0, Vector2( 0.92126, 0.181818 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.181818 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.11811, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.598425, 0.645455 ), 0.0, 0.0, 0, 0, Vector2( 0.862205, 0.290909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.290909 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.271654, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.685039, 0.6 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.376662 ), -0.709098, 0.0, 1, 0 ]
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0307878, 0, 1, Vector2( 0.295276, 0.0090909 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 4.61818, 0.0, 0, 0 ]
+
+[sub_resource type="CylinderShape" id=7]
+radius = 20.1535
+height = 0.522054
+
+[sub_resource type="Curve3D" id=8]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -7.94906, 0.0285645, 17.8494, 0, 0, 0, 0, 0, 0, -0.717794, 0.00650024, 8.74935 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 7.63605, 0.415055, 1.40084 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 8.20045, 0.415055, 0.646828 )
+
+[sub_resource type="CylinderShape" id=11]
+radius = 6.96554
+height = 0.460404
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 24.1492, 15.7508, 8.47517 )
+
+[node name="Vinyl" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+half_block_prefab = ExtResource( 4 )
+tall_block_prefab = ExtResource( 5 )
+block_prefab = ExtResource( 3 )
+door_prefab = ExtResource( 7 )
+hell_prefab = ExtResource( 6 )
+spawn_rate = SubResource( 1 )
+half_block_spawn_rate = SubResource( 2 )
+block_spawn_rate = SubResource( 3 )
+tall_block_spawn_rate = SubResource( 4 )
+door_spawn_rate = SubResource( 5 )
+hell_spawn_rate = SubResource( 6 )
+
+[node name="KinematicBody" type="KinematicBody" parent="Vinyl" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.253224, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Vinyl/KinematicBody" index="0"]
+shape = SubResource( 7 )
+
+[node name="SpawnTimer" type="Timer" parent="." index="3"]
+wait_time = 0.5
+
+[node name="SpawnPath" type="Path" parent="." index="4"]
+curve = SubResource( 8 )
+
+[node name="PathFollow" type="PathFollow" parent="SpawnPath" index="0"]
+
+[node name="DespawnArea" type="Area" parent="." index="5"]
+transform = Transform( 0.955134, 0, 0.296175, 0, 1, 0, -0.296175, 0, 0.955134, 11.3487, 0.799081, 2.05598 )
+
+[node name="CollisionShape" type="CollisionShape" parent="DespawnArea" index="0"]
+transform = Transform( 0.999763, 0, -0.0217277, 0, 1, 0, 0.0217277, 0, 0.999763, 1.05221, 0, 1.0717 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="DespawnArea" index="1"]
+transform = Transform( 0.520876, 0, 0.853633, 0, 1, 0, -0.853633, 0, 0.520876, 11.9931, 0, -6.26898 )
+shape = SubResource( 10 )
+
+[node name="AreaHitCenter" type="Area" parent="." index="6"]
+
+[node name="CollisionShape" type="CollisionShape" parent="AreaHitCenter" index="0"]
+shape = SubResource( 11 )
+
+[node name="StaticBody" type="StaticBody" parent="." index="7"]
+transform = Transform( 0.963728, 0, 0.266885, 0, 1, 0, -0.266885, 0, 0.963728, 4.09026, 0, 15.6352 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+shape = SubResource( 12 )
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="body_shape_entered" from="DespawnArea" to="." method="_on_DespawnArea_body_shape_entered"]

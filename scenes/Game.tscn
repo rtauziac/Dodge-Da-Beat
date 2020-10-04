@@ -1,0 +1,189 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scenes/Vinyl/vinyl_work.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Camera.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=4]
+[ext_resource path="res://audio/music/loop_02.ogg" type="AudioStream" id=5]
+[ext_resource path="res://scripts/Overlay.gd" type="Script" id=6]
+[ext_resource path="res://sprites/heart.png" type="Texture" id=7]
+[ext_resource path="res://scenes/Room.tscn" type="PackedScene" id=8]
+
+[sub_resource type="Environment" id=1]
+ambient_light_color = Color( 1, 1, 1, 1 )
+ssao_enabled = true
+ssao_radius = 0.8
+ssao_intensity = 0.8
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.185039, 0 ), 0.0, 1.27, 1, 0, Vector2( 1, 1 ), 1.22705, 0.0, 1, 0 ]
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 191.739, 3.65622, 172.634 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "beat_score"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CenterContainer/Label:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7 ),
+"transitions": PoolRealArray( 0.594604, 0, 0.594604, 0 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ), Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
+}
+
+[node name="Game" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="SpawnPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.48398, 0.325538, -7.38261 )
+
+[node name="Vinyl" parent="." instance=ExtResource( 1 )]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Vinyl"]
+stream = ExtResource( 5 )
+unit_db = -9.601
+unit_size = 16.8
+bus = "Scene"
+attenuation_filter_db = -15.9
+doppler_tracking = 1
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.922424, 0, 0.38618, 0, 1, 0, -0.38618, 0, -0.922424, -9.30768, 0.703231, -7.3991 )
+speed = 450.0
+dead_zone = SubResource( 2 )
+
+[node name="Camera" type="Spatial" parent="."]
+transform = Transform( -0.992014, 0, 0.12613, 0, 1, 0, -0.12613, 0, -0.992014, -7.79557, 0.509283, -13.5072 )
+script = ExtResource( 3 )
+follow_range_min = 4.0
+follow_range_max = 8.0
+player_weight = 0.16
+
+[node name="Camera" type="Camera" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.73165, 0 )
+
+[node name="Listener" type="Listener" parent="Camera/Camera"]
+
+[node name="rotation_watcher" type="Spatial" parent="Camera"]
+
+[node name="OutOfBoundsArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="OutOfBoundsArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.86957, 0 )
+shape = SubResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 11.0
+margin_top = 11.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeartBoxContainer" type="HBoxContainer" parent="CanvasLayer/HBoxContainer"]
+margin_right = 108.0
+margin_bottom = 32.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/HeartBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 7 )
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HBoxContainer/HeartBoxContainer"]
+margin_left = 38.0
+margin_right = 70.0
+margin_bottom = 32.0
+texture = ExtResource( 7 )
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/HBoxContainer/HeartBoxContainer"]
+margin_left = 76.0
+margin_right = 108.0
+margin_bottom = 32.0
+texture = ExtResource( 7 )
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer"]
+margin_left = 312.0
+margin_top = 150.0
+margin_right = 712.0
+margin_bottom = 450.0
+rect_min_size = Vector2( 400, 300 )
+rect_pivot_offset = Vector2( 200, 150 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+autoplay = "beat_score"
+anims/beat_score = SubResource( 5 )
+
+[node name="RestartBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.15749
+margin_right = -16.0
+margin_bottom = -15.1575
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="Button" parent="CanvasLayer/RestartBoxContainer"]
+margin_left = 908.0
+margin_top = 525.0
+margin_right = 1008.0
+margin_bottom = 585.0
+rect_min_size = Vector2( 100, 60 )
+size_flags_horizontal = 10
+size_flags_vertical = 10
+text = "Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="room" parent="." instance=ExtResource( 8 )]
+transform = Transform( 7.01902, 0, 0, 0, 7.01902, 0, 0, 0, 7.01902, 0, -13.16, 0 )
+
+[node name="TimerStart" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+[connection signal="body_entered" from="OutOfBoundsArea" to="." method="_on_OutOfBoundsArea_body_entered"]
+[connection signal="pressed" from="CanvasLayer/RestartBoxContainer/Restart" to="." method="new_game"]
+[connection signal="timeout" from="TimerStart" to="." method="_on_TimerStart_timeout"]
