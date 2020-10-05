@@ -47,6 +47,7 @@ environment = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.48398, 0.325538, -7.38261 )
 
 [node name="Vinyl" parent="." instance=ExtResource( 1 )]
+difficulty_duration = 110.0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Vinyl"]
 stream = ExtResource( 5 )

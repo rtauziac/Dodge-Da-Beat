@@ -22,6 +22,8 @@ _global_script_class_icons={
 
 config/name="Dodge Da Beat"
 run/main_scene="res://scenes/Game.tscn"
+run/disable_stdout=true
+run/disable_stderr=true
 boot_splash/image="res://Capture d’écran 2020-10-05 001743.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon_spr.png"

@@ -7,7 +7,6 @@
 extents = Vector3( 1, 1, 2 )
 
 [node name="Block" type="KinematicBody"]
-transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )

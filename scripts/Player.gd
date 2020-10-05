@@ -116,6 +116,8 @@ func _process(delta):
 		else:
 			jump_buffer = 0
 #		new_vel += air_velocity
+		if was_on_floor:
+			anim_state_machine.travel("jump")
 		was_on_floor = false
 		
 	velocity = new_vel
@@ -153,7 +155,7 @@ func _process(delta):
 	if jump_buffer > 0:
 		move_and_slide_with_snap(velocity, Vector3.ZERO, Vector3.UP)
 	else:
-		move_and_slide_with_snap(velocity, Vector3.DOWN * 0.25, Vector3.UP)
+		move_and_slide_with_snap(velocity, Vector3.DOWN * 0.4, Vector3.UP)
 
 func reset_variables():
 	jump_buffer = 1 # used to control jump height
@@ -168,7 +170,7 @@ func get_hit(body: Node):
 		hurt_area_inside_count += 1
 
 func get_hit_hell(body: Node):
-	if body == self:
+	if body == self and not hurt and invincibility == 0:
 		apply_hurt()
 
 func leave_hit(body: Node):
@@ -190,5 +192,6 @@ func _on_TimerHit_timeout():
 		invincibility = invincibility_time
 	else:
 		set_process(false)
+		hurt = true
 		skater_spatial.visible = false
 		emit_signal("end_game")
